@@ -10,7 +10,12 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import com.chitresh.laa.entities.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+
+//this class just acts as placeholder for data
+//Spring has a class to do that UserDetails, but it only has username, password, and authorities
+//if we need more details we have extend that class
+
+//this class is used in auth controller
 
 public class UserDetailsImpl implements UserDetails{
 	
@@ -19,11 +24,7 @@ public class UserDetailsImpl implements UserDetails{
 	private Long id;
 	private String username;
 	private String email;
-	@JsonIgnore
 	private String password;
-	private String phoneNumber;
-	private String profession;
-	private String description;
 	private Collection<? extends GrantedAuthority> authorities;
 	
 	@Override
@@ -32,17 +33,12 @@ public class UserDetailsImpl implements UserDetails{
 		return authorities;
 	}
 	
-	public UserDetailsImpl(Long id, String username, String email, String password,
-			Collection<? extends GrantedAuthority> authorities, String phoneNumber, 
-			String profession, String description) {
+	public UserDetailsImpl(Long id, String username, String password, String email, Collection<? extends GrantedAuthority> authorities) {
 		this.id = id;
 		this.username = username;
 		this.email = email;
 		this.password = password;
 		this.authorities = authorities;
-		this.phoneNumber = phoneNumber;
-		this.profession = profession;
-		this.description = description;
 	}
 	
 	public static UserDetailsImpl build(User user) {
@@ -53,12 +49,9 @@ public class UserDetailsImpl implements UserDetails{
 		return new UserDetailsImpl(
 				user.getId(), 
 				user.getUsername(), 
+				user.getPassword(),
 				user.getEmail(),
-				user.getPassword(), 
-				authorities,
-				user.getPhoneNumber(),
-				user.getProfession(),
-				user.getDescription());
+				authorities);
 	}
 
 	public Long getId() {
@@ -69,27 +62,8 @@ public class UserDetailsImpl implements UserDetails{
 		return email;
 	}
 
-	public String getPhoneNumber() {
-		return phoneNumber;
-	}
-
-	public String getProfession() {
-		return profession;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	@Override
-	public String getPassword() {
-		// TODO Auto-generated method stub
-		return password;
-	}
-
 	@Override
 	public String getUsername() {
-		// TODO Auto-generated method stub
 		return username;
 	}
 
@@ -125,5 +99,11 @@ public class UserDetailsImpl implements UserDetails{
 			return false;
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
+	}
+
+	@Override
+	public String getPassword() {
+		// TODO Auto-generated method stub
+		return password;
 	}
 }
