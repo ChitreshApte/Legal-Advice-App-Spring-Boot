@@ -49,14 +49,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
 	}
-
+	
+	//TODO here I am allowing all to access the messages API which is not safe, needs to be updates in the future
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable()
 			.exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.authorizeRequests().antMatchers("/api/auth/**").permitAll()
-			.antMatchers("/api/users/experts").permitAll()
+			.antMatchers("/api/messages/**").permitAll()
+			.antMatchers("/api/query/**").permitAll()
+			.antMatchers("/api/users/**").permitAll()
 			.antMatchers("/api/test/**").permitAll()
 			.antMatchers("/h2-console/**").permitAll()
 			.anyRequest().authenticated();

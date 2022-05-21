@@ -1,11 +1,11 @@
 package com.chitresh.laa.payload.request;
 
-import java.util.Set;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
-import javax.validation.constraints.*;
- 
-public class SignupRequest {
-    @NotBlank
+public class SignupRequestUser {
+	@NotBlank
     @Size(min = 3, max = 20)
     private String username;
  
@@ -13,8 +13,6 @@ public class SignupRequest {
     @Size(max = 50)
     @Email
     private String email;
-    
-    private Set<String> role;
     
     @NotBlank
     @Size(min = 6, max = 40)
@@ -34,12 +32,6 @@ public class SignupRequest {
 	}
 	public void setEmail(String email) {
 		this.email = email;
-	}
-	public Set<String> getRole() {
-		return role;
-	}
-	public void setRole(Set<String> role) {
-		this.role = role;
 	}
 	public String getPassword() {
 		return password;
@@ -65,6 +57,4 @@ public class SignupRequest {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
 }
